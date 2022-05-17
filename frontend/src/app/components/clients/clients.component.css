@@ -1,0 +1,38 @@
+.center {
+	max-width: 50%;
+	margin: 70px auto;
+}
+
+.mat-form-field + .mat-form-field {
+	margin-left: 8px;
+}
+
+.accordion-spacing {
+	margin: 1em;
+}
+
+.searchmatch{
+	background-color: rgba(0, 0, 0, 0.67);;
+}
+
+.clientexp-headers-align .mat-expansion-panel-header-title,
+.clientexp-headers-align .mat-expansion-panel-header-description {
+	flex-basis: 0;
+}
+
+.clientexp-headers-align .mat-expansion-panel-header-description {
+	justify-content: space-between;
+	align-items: center;
+}
+
+.clientexp-headers-align .mat-form-field + .mat-form-field {
+	margin-left: 8px;
+}
+
+.pad-1{
+	padding: 8px;
+}
+
+.float-right{
+	margin-left: auto;
+}

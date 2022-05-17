@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Add Account</h2>
+
+<mat-dialog-content class="mat-typography">
+	<form [formGroup]="createForm" class="form container">
+		<mat-form-field class="form-element">
+			<mat-label>Starting balance</mat-label>
+			<input
+				matInput
+				type="number"
+				placeholder="Ex. 1000"
+				value="0"
+				[errorStateMatcher]="matcher"
+				formControlName="balance"
+			/>
+			<mat-error *ngIf="myForm.balance.errors?.required">
+				Must provide <strong>balance</strong>
+			</mat-error>
+			<mat-error *ngIf="myForm.balance.errors?.pattern">
+				Balance has to be a <strong>number</strong>
+			</mat-error>
+		</mat-form-field>
+	</form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+	<button
+		mat-button
+		[mat-dialog-close]="true"
+		(click)="submitForm()"
+		[disabled]="!createForm.valid"
+	>
+		Confirm
+	</button>
+</mat-dialog-actions>

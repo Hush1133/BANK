@@ -1,0 +1,94 @@
+<h2 mat-dialog-title>New Transaction</h2>
+<h3>From: {{ fromAccount.accountNumber }}</h3>
+<h3>Available balance: {{ fromAccount.balance }}</h3>
+<mat-dialog-content class="mat-typography">
+	<form [formGroup]="createForm" class="form container">
+		<mat-form-field class="form-element full-width">
+			<mat-label>Amount to transfer</mat-label>
+			<input
+				matInput
+				type="number"
+				placeholder="Ex. 10000"
+				[max]="fromAccount.balance"
+				min="1"
+				[errorStateMatcher]="matcher"
+				formControlName="amount"
+			/>
+			<mat-error *ngIf="myForm.amount.errors?.required">
+				Must provide <strong>amount to transfer!</strong>
+			</mat-error>
+			<mat-error *ngIf="myForm.amount.errors?.min">
+				Must provide
+				<strong>amount between 1 and the available balance!</strong>
+			</mat-error>
+			<mat-error *ngIf="myForm.amount.errors?.max">
+				Must provide
+				<strong>amount between 1 and the available balance!</strong>
+			</mat-error>
+		</mat-form-field>
+		<br />
+		<mat-form-field class="form-element full-width">
+			<mat-label>Comment</mat-label>
+			<input
+				matInput
+				type="text"
+				maxlength="60"
+				placeholder="Ex. Rent for this month."
+				[errorStateMatcher]="matcher"
+				formControlName="comment"
+				#comment
+			/>
+			<mat-hint align="end">{{ comment.value.length }} / 60</mat-hint>
+		</mat-form-field>
+	</form>
+	<mat-form-field class="form-element full-width">
+		<mat-label>Transaction type:</mat-label>
+		<mat-select [(value)]="transactiontype">
+			<mat-option value="BETWEENACCS"> Between accounts </mat-option>
+			<mat-option value="CASHIN"> Cash in </mat-option>
+			<mat-option value="CASHOUT"> Cash out </mat-option>
+		</mat-select>
+	</mat-form-field>
+	<div *ngIf="transactiontype === 'BETWEENACCS'" class="form-element">
+		<mat-form-field class="form-element full-width">
+			<mat-label>Client:</mat-label>
+			<mat-select [(value)]="selectedclient">
+				<mat-option *ngFor="let client of Clients" [value]="client.cID">
+					{{ client.name }} | {{ client.cID }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<br />
+		<mat-form-field *ngIf="selectedclient" class="form-element full-width">
+			<mat-label>Account:</mat-label>
+			<mat-select [(value)]="selectedaccount">
+				<div *ngFor="let account of Accounts; let i = index">
+					<mat-option
+						*ngIf="
+							fromAccount.accountNumber ===
+								account.accountNumber ||
+							selectedclient !== account.clientID || account.status === 'CLOSED'
+								? null
+								: true
+						"
+						[value]="account"
+					>
+						{{ account.accountNumber }} | {{ account.balance }}
+					</mat-option>
+				</div>
+			</mat-select>
+		</mat-form-field>
+	</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+	<button
+		mat-button
+		[mat-dialog-close]="true"
+		(click)="submitForm()"
+		[disabled]="!createForm.valid"
+	>
+		Confirm
+	</button>
+</mat-dialog-actions>

@@ -1,0 +1,14 @@
+.center {
+	max-width: 50%;
+	margin: 70px auto;
+}
+table {
+    width: 100%;
+}
+.full-width{
+    width: 100%;
+}
+
+.half-width{
+    width: 50%;
+}

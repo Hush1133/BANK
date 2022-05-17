@@ -1,0 +1,128 @@
+<div class="center">
+	<p *ngIf="Clients.length <= 0" class="no-data text-center">
+		No clients yet!
+	</p>
+</div>
+
+<div class="center">
+
+	<form [formGroup]="searchForm">
+		<mat-form-field class="form-element full-width">   <!--Keresesenek a fromja/inputja-->
+			<mat-label>Search</mat-label>
+			<input
+				matInput
+				type="text"
+				formControlName="search"
+				#searchForm
+			/>
+		</mat-form-field>
+		<br />
+		<br />
+	</form>
+
+	<div>
+		<button mat-button (click)="accordion.openAll()">Expand All</button>
+		<button mat-button (click)="accordion.closeAll()">Collapse All</button>
+	</div>
+	<mat-accordion
+		#accordion="matAccordion"
+		[multi]="true"
+		class="accordion-spacing clientexp-headers-align"
+	>
+		<mat-expansion-panel
+			*ngFor="let client of Clients; let i = index"    
+			class="extension-panel-shown"
+			[ngClass]="{'searchmatch' : (searchForm.value !== '') && (client.name.includes(searchForm.value) || client.cID.includes(searchForm.value) || client.IDnum.includes(searchForm.value))}"
+			hideToggle
+			[disabled]="client.deleted"
+		>     <!--Minden kilensnek general egy lenyilo panelt-->
+			<mat-expansion-panel-header class="extension-panel-header-shown">
+				<mat-panel-title class="pad-1">
+					{{ client.name }}
+				</mat-panel-title>
+				<mat-panel-description>
+					Client number: {{ client.cID }}
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<mat-tab-group>
+				<mat-tab label="Info">
+					<mat-list role="list">
+						<mat-list-item role="listitem"
+							><mat-label
+								>Phone no.: {{ client.phone }}</mat-label
+							></mat-list-item
+						>
+						<mat-list-item role="listitem"
+							><mat-label
+								>Identification no.:
+								{{ client.IDnum }}</mat-label
+							></mat-list-item
+						>
+						<mat-list-item role="listitem"
+							><mat-label
+								>Address: {{ client.address }}</mat-label
+							></mat-list-item
+						>
+					</mat-list>
+					<button
+						[disabled]="client.deleted"
+						mat-button
+						(click)="editClient(client, i)"
+					>
+						<mat-icon>edit</mat-icon>
+					</button>
+					<button
+						[disabled]="client.deleted"
+						mat-button
+						(click)="deleteClient(client)"
+					>
+						<mat-icon>delete</mat-icon>
+					</button>
+				</mat-tab>
+				<mat-tab label="Accounts">
+					<div *ngFor="let acc of Accounts">
+						<mat-list
+							*ngIf="client.cID == acc.clientID"
+							[disabled]="acc.status === 'CLOSED' ? true : null"
+						>
+							<mat-list-item
+								*ngIf="client.cID == acc.clientID"
+								[disabled]="
+									acc.status === 'CLOSED' ? true : null
+								"
+							>
+								Account number: {{ acc.accountNumber }} |
+								Balance:
+								{{ acc.balance }}
+								<button
+									*ngIf="acc.status === 'OPEN'"
+									mat-button
+									class="float-right"
+									(click)="newTransaction(acc)"
+								>
+									<mat-icon>attach_money</mat-icon>
+								</button>
+								<button
+									*ngIf="acc.status === 'OPEN'"
+									mat-button
+									(click)="deleteAccount(client, acc)"
+								>
+									<mat-icon>delete</mat-icon>
+								</button>
+							</mat-list-item>
+						</mat-list>
+					</div>
+
+					<button mat-button (click)="addAccount(client)">
+						<mat-icon>add</mat-icon>
+					</button>
+				</mat-tab>
+			</mat-tab-group>
+		</mat-expansion-panel>
+	</mat-accordion>
+	<div class="button-container">
+		<button mat-fab color="primary" (click)="createClient()">
+			<mat-icon>add</mat-icon>
+		</button>
+	</div>
+</div>

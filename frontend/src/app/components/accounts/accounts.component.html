@@ -1,0 +1,15 @@
+<div class="center">
+	<mat-card *ngFor="let acc of Accounts; let i = index">
+		<mat-card-title>{{ acc.clientID }}</mat-card-title>
+		<mat-card-subtitle>{{ acc.balance }}</mat-card-subtitle>
+		<mat-card-actions>
+			<button mat-button>Transfer</button>
+			<button mat-button>Delete</button>
+		</mat-card-actions>
+	</mat-card>
+	<div class="button-container">
+		<button mat-fab color="primary" (click)="createAccount()">
+			<mat-icon>add</mat-icon>
+		</button>
+	</div>
+</div>
