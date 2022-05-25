@@ -26,6 +26,7 @@ import { MaterialModule } from "./material.module";
 import { ApiService } from "./service/api.service";
 import { DeleteConfirmComponent } from './dialogs/delete-confirm/delete-confirm.component';
 import { EditClientComponent } from './components/edit-client/edit-client.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
 	declarations: [
@@ -40,6 +41,7 @@ import { EditClientComponent } from './components/edit-client/edit-client.compon
 		AssessmentComponent,
 		DeleteConfirmComponent,
 		EditClientComponent,
+		LoginComponent,
 	],
 	imports: [
 		BrowserModule,

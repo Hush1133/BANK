@@ -43,6 +43,23 @@ export abstract class Controller {
 		}
 	};
 
+	getOneByName = async (req, res) => {
+		try {
+			const username = req.params.username;
+			const entity = await this.repository.findOne({ where: {username: username}});
+
+			if (!entity) {
+				this.handleError(res, 404, "No entity found");
+				return;
+			}
+
+			res.json(entity);
+		} catch (err) {
+			console.error(err);
+			this.handleError(res);
+		}
+	};
+
 	//update = this.create;
 	update = async (req, res) => {
 		//const entity = this.repository.create(req.body);

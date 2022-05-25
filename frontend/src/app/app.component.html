@@ -5,11 +5,11 @@
 
 			<span class="example-spacer"></span>
 
-			<a mat-button routerLinkActive="active" routerLink="/clients">
+			<a mat-button [class]="linkEnabled ? 'isactive' : 'isdisabled'" [routerLink]="linkEnabled?'/clients':'null'">
 				<mat-icon>event_note</mat-icon>
 				<span class="icon">Management</span>
 			</a>
-			<a mat-button routerLinkActive="active" routerLink="/assessment">
+			<a mat-button [class]="linkEnabled ? 'isactive' : 'isdisabled'" [routerLink]="linkEnabled?'/assessment':'null'">
 				<mat-icon>assessment</mat-icon>
 				<span class="icon">Assessment</span>
 			</a>

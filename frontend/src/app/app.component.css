@@ -50,3 +50,8 @@
   .nav-bar a span {
     padding: 5px;
   }
+
+  .isdisabled{
+    cursor: default;
+    display: none;
+  }

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AccountController } from "./src/controller/account.controller";
 import { ClientController } from "./src/controller/client.controller";
 import { TransactionController } from "./src/controller/transaction.controller";
+import { UserController } from "./src/controller/user.controller";
 
 export function getRouter() {
 	const router = Router();
@@ -9,6 +10,7 @@ export function getRouter() {
 	const transactionController = new TransactionController();
 	const accountController = new AccountController();
 	const clientController = new ClientController();
+	const userController = new UserController();
 
 	router.get("/getallT", transactionController.getAll);
 	router.get("/getT/:id", transactionController.getOne);
@@ -27,6 +29,9 @@ export function getRouter() {
 	router.post("/addC", clientController.create);
 	router.put("/updateC/:id", clientController.update);
 	router.delete("/deleteC/:id", clientController.delete);
+
+	router.get("/getU/:username", userController.getOneByName);
+	router.post("/addU", userController.create);
 
 	return router;
 }

@@ -7,4 +7,14 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
 	title = "nototp";
+	public static slinkEnabled: any;
+
+	constructor(){
+		AppComponent.slinkEnabled = false;
+	}
+
+get linkEnabled(){
+	return AppComponent.slinkEnabled;
+}
+
 }

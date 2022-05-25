@@ -17,6 +17,16 @@ export class ApiService {
 
 	constructor(private http: HttpClient) {}
 
+	getUser(id: any): Observable<any> {
+		const url = `${this.baseUri}/getU/${id}`;
+		return this.http.get(url, { headers: this.headers }).pipe(
+			map((res: Response) => {
+				return res || {};
+			}),
+			catchError(this.errorMgmt)
+		);
+	}
+
 	getClients() {
 		return this.http.get(`${this.baseUri}/getallC`);
 	}
@@ -57,6 +67,11 @@ export class ApiService {
 			}),
 			catchError(this.errorMgmt)
 		);
+	}
+
+	createUser(data: any): Observable<any> {
+		const url = `${this.baseUri}/addU`;
+		return this.http.post(url, data).pipe(catchError(this.errorMgmt));
 	}
 
 	createClient(data: any): Observable<any> {
